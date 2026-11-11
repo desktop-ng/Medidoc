@@ -28,7 +28,11 @@ export const patient_summaries = pgTable(
         "lifestyle",
         "family_history",
         "social_situation",
-        "care_plan"
+        "care_plan",
+        "reproductive_history",
+        "obstetric_history",
+        "contraception",
+        "menstrual_profile"
       ]
     }).notNull(),
     data: json("data").notNull(),

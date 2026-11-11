@@ -1,4 +1,6 @@
 import * as z from "zod";
+import { extendZodWithOpenApi } from "@asteasolutions/zod-to-openapi";
+extendZodWithOpenApi(z);
 
 export const CreateInvoiceSchema = z.object({
   appointmentId: z.uuid().optional(),

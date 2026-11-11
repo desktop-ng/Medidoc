@@ -1,4 +1,6 @@
 import * as z from "zod";
+import { extendZodWithOpenApi } from "@asteasolutions/zod-to-openapi";
+extendZodWithOpenApi(z);
 
 export const CreateConsentFormSchema = z.object({
   procedureName: z.string().trim().min(1, {

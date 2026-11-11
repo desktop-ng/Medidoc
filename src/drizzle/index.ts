@@ -17,3 +17,8 @@ export * from "./schemas/invoices.schema";
 export * from "./schemas/payments.schema";
 export * from "./schemas/consent-forms.schema";
 export * from "./schemas/audit-logs.schema";
+export * from "./schemas/reproductive-profiles.schema";
+export * from "./schemas/menstrual-cycles.schema";
+export * from "./schemas/pregnancies.schema";
+export * from "./schemas/children.schema";
+export * from "./schemas/referrals.schema";

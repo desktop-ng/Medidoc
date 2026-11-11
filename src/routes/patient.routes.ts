@@ -13,14 +13,11 @@ import {
   getOrganizationAccess,
   assignOrganizationAccess,
   revokeOrganizationAccess,
-  revokePractitionerAccess,
-  assignPractitionerAccess,
   getEpisodes,
   createEpisode,
   createSummary,
   getClinicalEntries,
-  createClinicalEntry,
-  getPractiitonerAccess
+  createClinicalEntry
 } from "../controllers/patient.controller";
 import {
   listAppointments,
@@ -46,13 +43,11 @@ import { CreateConsentFormSchema } from "../validators/consent-form";
 import {
   UpdatePatientProfileSchema,
   OrganizationAccessSchema,
-  PractitionerAccessSchema,
   AccessIdParamsSchema,
   NewEpisodeLabelSchema,
   NewSummarySchema,
   NewClinicalEntrySchema
 } from "@/validators/patient";
-import { UpdateProfileSchema } from "@/validators/auth";
 
 const router = Router();
 
@@ -100,29 +95,6 @@ router.post(
   requirePatientUser,
   validateRequest(AccessIdParamsSchema, "params"),
   revokeOrganizationAccess
-);
-
-router.get(
-  "/:patientId/practitioner-access",
-  verifyAuthentication,
-  requirePatientAccess({ roles: ["admin", "patient", "provider"] }),
-  getPractiitonerAccess
-);
-
-router.post(
-  "/:patientId/practitioner-access",
-  verifyAuthentication,
-  requirePatientAccess({ roles: ["admin"] }),
-  validateRequest(PractitionerAccessSchema),
-  assignPractitionerAccess
-);
-
-router.post(
-  "/:patientId/practitioner-access/:accessId/revoke",
-  verifyAuthentication,
-  requirePatientAccess({ roles: ["admin"] }),
-  validateRequest(AccessIdParamsSchema, "params"),
-  revokePractitionerAccess
 );
 
 router.get(

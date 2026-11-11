@@ -14,7 +14,8 @@ export const organization_access = pgTable(
       .notNull(),
     status: text("status", { enum: ["active", "revoked"] }).notNull(),
     grantedAt: timestamp("granted_at"),
-    revokedAt: timestamp("revoked_at")
+    revokedAt: timestamp("revoked_at"),
+    expiresAt: timestamp("expires_at")
   },
   table => [
     index("organization_access_patient_id_idx").on(table.patientId),

@@ -3,6 +3,11 @@ import { validateRequest } from "../middlewares/validate-request";
 import { validateObjectId } from "../middlewares/validate-id";
 import { verifyAuthentication } from "../middlewares/verify-auth";
 import { requireOrgAdmin } from "../middlewares/require-org-admin";
+import { requirePatientAccess } from "../middlewares/require-patient-access";
+import {
+  PractitionerAccessSchema,
+  AccessIdParamsSchema
+} from "@/validators/patient";
 import {
   requireOrgStaff,
   requireOrgMember
@@ -27,7 +32,10 @@ import {
   reinstateOrganization,
   getPlatformStats,
   listOrganizationPatients,
-  listPublicPractitioners
+  listPublicPractitioners,
+  revokePractitionerAccess,
+  assignPractitionerAccess,
+  getPractiitonerAccess
 } from "../controllers/organization.controller";
 import {
   listOrganizationAppointments,
@@ -161,6 +169,29 @@ router.post(
   validateRequest(CreatePractitionerSchema),
   signupRateLimiter,
   createPractitioner
+);
+
+router.post(
+  "/organizations/:organizationId/:patientId/practitioner-access",
+  verifyAuthentication,
+  requireOrgAdmin,
+  validateRequest(PractitionerAccessSchema),
+  assignPractitionerAccess
+);
+
+router.post(
+  "/organizations/:organizationId/:patientId/practitioner-access/:accessId/revoke",
+  verifyAuthentication,
+  requireOrgAdmin,
+  validateRequest(AccessIdParamsSchema, "params"),
+  revokePractitionerAccess
+);
+
+router.get(
+  "/organizations/:organizationId/:patientId/practitioner-access",
+  verifyAuthentication,
+  requirePatientAccess({ roles: ["admin", "patient", "provider"] }),
+  getPractiitonerAccess
 );
 
 router.post(

@@ -1,4 +1,6 @@
 import * as z from "zod";
+import { extendZodWithOpenApi } from "@asteasolutions/zod-to-openapi";
+extendZodWithOpenApi(z);
 
 export const CreateAppointmentSchema = z.object({
   practitionerId: z.uuid({ message: "practitionerId must be a valid uuid" }),

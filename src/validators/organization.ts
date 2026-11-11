@@ -1,4 +1,6 @@
 import * as z from "zod";
+import { extendZodWithOpenApi } from "@asteasolutions/zod-to-openapi";
+extendZodWithOpenApi(z);
 import { nameSchema, emailSchema, passwordSchema } from "./auth";
 
 export const CreateAdminSchema = z.object({

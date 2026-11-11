@@ -10,6 +10,7 @@ import { patients } from "./patients.schema";
 import { practitioners } from "./practitioners.schema";
 import { providers } from "./providers.schema";
 import { episodes } from "./episodes.schema";
+import { pregnancies } from "./pregnancies.schema";
 
 export const clinical_entries = pgTable(
   "clinical_entries",
@@ -25,16 +26,29 @@ export const clinical_entries = pgTable(
       .references(() => providers.id)
       .notNull(),
     episodeId: uuid("episode_id").references(() => episodes.id),
+    pregnancyId: uuid("pregnancy_id").references(() => pregnancies.id),
     eventType: text("event_type", {
       enum: [
         "observation",
+        "antenatal_visit",
+        "delivery",
+        "newborn_record",
+        "vaccination",
         "order",
+        "referral",
         "procedure",
         "lab_result",
         "radiology",
+        "ultrasound",
         "vital_signs",
         "progress_note",
-        "note"
+        "note",
+        "gynae_visit",
+        "contraception_update",
+        "prenatal_screening",
+        "postnatal_visit",
+        "child_growth",
+        "child_vaccine"
       ]
     }).notNull(),
     data: json("data").notNull(),

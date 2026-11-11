@@ -4,6 +4,9 @@ import {
   OpenApiGeneratorV3,
   extendZodWithOpenApi
 } from "@asteasolutions/zod-to-openapi";
+import { registerFemHealthPaths } from "./femhealth.openapi";
+import { registerPatientPaths } from "./patient.openapi";
+import { registerOrganizationPaths } from "./organization.openapi";
 import {
   ChangePasswordSchema,
   DeleteAccountSchema,
@@ -581,15 +584,19 @@ registry.registerPath({
   }
 });
 
+registerFemHealthPaths(registry);
+registerPatientPaths(registry);
+registerOrganizationPaths(registry);
+
 const generator = new OpenApiGeneratorV3(registry.definitions);
 
 const generatedDocument = generator.generateDocument({
   openapi: "3.0.0",
   info: {
-    title: "Medidoc API",
+    title: "FemHealth API",
     version: "1.0.0",
     description:
-      "OpenAPI spec generated from Medidoc Zod validators and route registry."
+      "Patient-owned reproductive and maternal health EHR for Sub-Saharan Africa. Patients control their own records and grant access to organisations and practitioners."
   },
   servers: [
     {

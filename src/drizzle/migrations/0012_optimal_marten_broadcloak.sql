@@ -1,1 +1,0 @@
-ALTER TABLE "payments" ALTER COLUMN "recorded_by" DROP NOT NULL;

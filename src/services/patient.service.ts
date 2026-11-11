@@ -8,7 +8,6 @@ import {
   patient_summaries,
   PatientSummary,
   NewPatientSummary,
-  practitioner_access,
   clinical_entries,
   ClinicalEntry,
   NewClinicalEntry
@@ -61,19 +60,6 @@ export class PatientService {
       );
   }
 
-  static async getPractitionerAccessList(patientId: string) {
-    return db
-      .select()
-      .from(practitioner_access)
-      .where(
-        and(
-          eq(practitioner_access.patientId, patientId),
-          eq(practitioner_access.status, "active"),
-          isNull(practitioner_access.revokedAt)
-        )
-      );
-  }
-
   static async addOrganizationAccess(
     patientId: string,
     organizationId: string
@@ -81,7 +67,8 @@ export class PatientService {
     const access = await db.query.organization_access.findFirst({
       where: and(
         eq(organization_access.patientId, patientId),
-        eq(organization_access.organizationId, organizationId)
+        eq(organization_access.organizationId, organizationId),
+        eq(organization_access.status, "active")
       )
     });
 
@@ -94,38 +81,6 @@ export class PatientService {
       .values({
         patientId: patientId,
         organizationId: organizationId,
-        status: "active",
-        grantedAt: new Date()
-      })
-      .returning();
-
-    return newAccess;
-  }
-
-  static async addPractitionerAccess(
-    adminId: string,
-    organizationId: string,
-    patientId: string,
-    practitionerId: string
-  ) {
-    const access = await db.query.practitioner_access.findFirst({
-      where: and(
-        eq(practitioner_access.patientId, patientId),
-        eq(practitioner_access.id, practitionerId)
-      )
-    });
-
-    if (access) {
-      throw ApiError.badRequest("Organization access has already been granted");
-    }
-
-    const newAccess = await db
-      .insert(practitioner_access)
-      .values({
-        patientId: patientId,
-        practitionerId: practitionerId,
-        organizationId: organizationId,
-        grantedBy: adminId,
         status: "active",
         grantedAt: new Date()
       })
@@ -153,32 +108,6 @@ export class PatientService {
         and(
           eq(organization_access.patientId, patientId),
           eq(organization_access.id, accessId)
-        )
-      )
-      .returning();
-
-    return removedAccess;
-  }
-
-  static async removePractitionerAccess(patientId: string, accessId: string) {
-    const access = await db.query.practitioner_access.findFirst({
-      where: eq(practitioner_access.id, accessId)
-    });
-
-    if (!access) {
-      throw ApiError.badRequest("Invalid access id");
-    }
-
-    const removedAccess = await db
-      .update(practitioner_access)
-      .set({
-        status: "revoked",
-        revokedAt: new Date()
-      })
-      .where(
-        and(
-          eq(practitioner_access.patientId, patientId),
-          eq(practitioner_access.id, accessId)
         )
       )
       .returning();

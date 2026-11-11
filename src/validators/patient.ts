@@ -1,4 +1,6 @@
 import * as z from "zod";
+import { extendZodWithOpenApi } from "@asteasolutions/zod-to-openapi";
+extendZodWithOpenApi(z);
 import { OTP_TYPES } from "../constants/auth";
 import { nameSchema } from "./auth";
 import { episodes } from "@/drizzle";
