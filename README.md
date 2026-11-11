@@ -1,6 +1,6 @@
-# FemHealth API
+# Medidoc API
 
-A patient-owned reproductive and maternal health EHR built for Sub-Saharan Africa. FemHealth gives women a portable, verifiable health record they carry with them — not one that stays locked inside a clinic's system.
+A patient-owned reproductive and maternal health EHR built for Sub-Saharan Africa. Medidoc gives women a portable, verifiable health record they carry with them — not one that stays locked inside a clinic's system.
 
 When a mother is referred from a primary health centre to a hospital, she no longer arrives as a stranger. A QR code on her phone or printed referral card carries a tamper-proof snapshot of her history. The receiving obstetrician scans it and has her blood group, gestational age, complications, and current medications in under 60 seconds.
 
@@ -16,11 +16,11 @@ This is not a connectivity problem. It is a data ownership problem: health recor
 
 ---
 
-## How FemHealth Solves It
+## How Medidoc Solves It
 
 **Patient-sovereign records.** The patient owns her data. She grants access to organisations; organisations grant access to their practitioners. Every grant and revocation is recorded and, for organisations, anchored on-chain.
 
-**Portable referral passport.** When a practitioner initiates a referral, FemHealth generates a QR code containing a one-time access code. The receiving facility scans it to retrieve a frozen snapshot of the patient's record — demographics, reproductive profile, current pregnancy details, medications, and the latest clinical entry — regardless of whether the two facilities share any system.
+**Portable referral passport.** When a practitioner initiates a referral, Medidoc generates a QR code containing a one-time access code. The receiving facility scans it to retrieve a frozen snapshot of the patient's record — demographics, reproductive profile, current pregnancy details, medications, and the latest clinical entry — regardless of whether the two facilities share any system.
 
 **Emergency-ready.** The snapshot is generated at the time of referral and requires no internet access to read after the initial scan. Access codes expire automatically (24 hours for emergency referrals, 7 days for routine).
 
@@ -109,8 +109,8 @@ src/
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/your-org/femhealth-api.git
-cd femhealth-api
+git clone https://github.com/your-org/medidoc-api.git
+cd medidoc-api
 
 # 2. Install dependencies
 npm install
@@ -120,7 +120,7 @@ cp .env.example .env
 # Edit .env with your values
 
 # 4. Create the database
-createdb femhealth
+createdb medidoc
 
 # 5. Push the schema
 npm run db:push
@@ -140,7 +140,7 @@ Swagger docs: `http://localhost:4000/api/v1/docs`
 NODE_ENV=development
 PORT=4000
 
-DATABASE_URL=postgresql://user:password@localhost:5432/femhealth
+DATABASE_URL=postgresql://user:password@localhost:5432/medidoc
 
 REDIS_URL=redis://localhost:6379
 
@@ -239,7 +239,7 @@ npm run format:fix      # Format with Prettier
 
 ## Blockchain Integration
 
-FemHealth uses blockchain for tamper-evident audit trails at two points:
+Medidoc uses blockchain for tamper-evident audit trails at two points:
 
 1. **Organisation access events** — every `grant` and `revoke` of a patient's data is anchored on-chain, giving the patient an immutable record of who has accessed her data.
 

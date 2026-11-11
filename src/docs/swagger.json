@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "FemHealth API",
+    "title": "Medidoc API",
     "version": "1.0.0",
     "description": "Patient-owned reproductive and maternal health EHR for Sub-Saharan Africa. Patients control their own records and grant access to organisations and practitioners."
   },
